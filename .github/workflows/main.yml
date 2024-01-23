@@ -1,0 +1,21 @@
+import time
+import unittest
+def timeit(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        execution_time = end_time - start_time
+        print(f"{func.__name__} executed in {execution_time:.6f} seconds")
+        return result
+    return wrapper
+def example_function():
+    time.sleep(2) 
+class TestTimeitFunction(unittest.TestCase):
+    def test_execution_time(self):
+        with self.assertLogs() as cm:
+            example_function()
+        log_output = cm.output[0]
+        self.assertTrue("example_function executed in" in log_output)
+if __name__ == '__main__':
+    unittest.main()
